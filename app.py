@@ -68,7 +68,11 @@ def retrieve():
     if form.is_submitted():
         result = request.form
 
-        wk1,wk2 = archive.archive().get(result.get("email"))
+        try:
+            wk1,wk2 = archive.archive().get(result.get("email"))
+
+        except:
+            return render_template('errorFound.html', err="The email address given doesn't exist within the database. It's likely a typo or an initial workout hasn't been generated yet")
 
         print("Workout for {} retreived".format(result.get("email")))
 
@@ -76,8 +80,6 @@ def retrieve():
 
 
     return render_template('retrieve.html', form=form)
-
-    
 
 if __name__ == '__main__':
     app.run()
