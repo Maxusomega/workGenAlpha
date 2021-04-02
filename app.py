@@ -5,8 +5,13 @@ from forms import SignUpForm
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-################## NEW ########################
+
 import algoImp as al
+
+################## NEW ########################
+from sqlite3 import Error
+import sqlite3
+import storeWk as archive
 ################## NEW ########################
 
 
@@ -33,7 +38,54 @@ def signup():
     if form.is_submitted():
         result = request.form
 
-        """
+        wk = al.workoutGen()
+        wkls = None
+        while(True):
+            try:
+                wkls = wk.generator(result.get("sport").lower().strip())
+                break
+            except:
+                pass
+
+        wk1,wk2 = wk.formatter(wkls.wk)
+
+        ################## NEW ########################
+
+        archive.archive().archive(wk1,wk2,result.get("email")) #archiving the workout
+ 
+        ################## NEW ########################
+        
+        return render_template('display.html', wk1=wk1, wk2=wk2, fName = result.get("first_name"), lName = result.get("last_name"), email = result.get("email"))
+
+
+    return render_template('signup.html', form=form)
+
+    #pass the arrays into the html page as variables as jinja. Reference the about page
+
+@app.route('/retrieve', methods=['GET', 'POST'])
+def retrieve():
+    form = SignUpForm()
+    if form.is_submitted():
+        result = request.form
+
+        wk1,wk2 = archive.archive().get(result.get("email"))
+
+        print("Workout for {} retreived".format(result.get("email")))
+
+        return render_template('display.html', wk1=wk1, wk2=wk2, fName = "Archived", lName = "Result", email = result.get("email"))
+
+
+    return render_template('retrieve.html', form=form)
+
+    
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
+"""
         try:
             #sqlExe = "INSERT INTO userInfo({},{},{},{});".format(result.get("first_name"), result.get("last_name"), result.get("email"),result.get("sport"))
             #print(sqlExe)
@@ -51,30 +103,3 @@ def signup():
         return render_template('user.html', result=result)
 
         """
-        wk = al.workoutGen()
-        wkls = None
-        while(True):
-            try:
-                wkls = wk.generator(result.get("sport").lower())
-                break
-            except:
-                pass
-
-        wk1,wk2 = wk.formatter(wkls.wk)
-
-        #print(wk1,wk2)
-        
-        return render_template('display.html', wk1=wk1, wk2=wk2, fName = result.get("first_name"), lName = result.get("last_name"), email = result.get("email"))
-
-
-    return render_template('signup.html', form=form)
-
-    #pass the arrays into the html page as variables as jinja. Reference the about page
-
-@app.route('/retrieve')
-def retrieve():
-    return (render_template('retrieve.html'))
-
-if __name__ == '__main__':
-    app.run()
-
