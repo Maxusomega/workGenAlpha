@@ -5,6 +5,6 @@ class SignUpForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email address')
-    sport = StringField('Sport (currently only supports "swim")')
+    sport = StringField('Sport (supports "swim", "baseball", "soccer", and "none")')
         
     submit = SubmitField("Submit")
