@@ -8,19 +8,23 @@
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 50%;
+  width: 40%;
   border: 1px solid #ddd;
 }
 
 th, td, tr {
   text-align: center;
-  padding: 16px;
+  padding: 12px;
 }
 
 tr:nth-child(even) {
   background-color: #800000;
   color: whitesmoke;
 }
+body {
+       color: black; }
+    a {color: black; text-decoration: none;}
+    a:hover {text-decoration: none;}
 
 </style>
 
@@ -38,7 +42,7 @@ tr:nth-child(even) {
 
     <tr>
         <th>
-            <h3>Exercise</h3>
+            <h3>Exercise (Click name for Instructions)</h3>
         </th>
         <th>
             <h3>Exercise Type</h3>
@@ -49,6 +53,9 @@ tr:nth-child(even) {
         <th>
             <h3>Rep Range</h3>
         </th>
+        <th>
+            <h3>Check once completed</h3>
+        </th>
 
     </tr>
 
@@ -56,7 +63,7 @@ tr:nth-child(even) {
         {% for ex in wk1 %}
 
         <th>
-            <a href="{{ex[6]}}", target="_blank">{{ex[0]}}</a>
+            <h2><a href="{{ex[6]}}", target="_blank">{{ex[0]}}</a></h2>
         </th>
         <th>
             {{ex[1]}}
@@ -66,6 +73,12 @@ tr:nth-child(even) {
         </th>
         <th>
             {{ex[5]}}
+        </th>
+        <th>
+            <label class="container">completed
+                <input type="checkbox">
+                <span class="checkmark"></span>
+              </label>
         </th>
     </tr>
 
@@ -92,6 +105,9 @@ tr:nth-child(even) {
     <th>
         <h3>Rep Range</h3>
     </th>
+    <th>
+        <h3>Check once completed</h3>
+    </th>
     
 
 </tr>
@@ -100,7 +116,7 @@ tr:nth-child(even) {
     {% for ex in wk2 %}
 
     <th>
-        <a href="{{ex[6]}}", target="_blank">{{ex[0]}}</a>
+        <h2><a href="{{ex[6]}}", target="_blank">{{ex[0]}}</a></h2>
     </th>
     <th>
         {{ex[1]}}
@@ -110,6 +126,12 @@ tr:nth-child(even) {
     </th>
     <th>
         {{ex[5]}}
+    </th>
+    <th>
+        <label class="container">completed
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
     </th>
 </tr>
 
