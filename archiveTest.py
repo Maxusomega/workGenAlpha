@@ -26,3 +26,11 @@ wk1,wk2 = arch.get("swsmatthew@gmail.com")
 print(wk1)
 print()
 print(wk2)
+print("adding value to workout")
+arch.adjustWeight("swsmatthew@gmail.com",1,1,100)
+
+wk1,wk2 = arch.get("swsmatthew@gmail.com")
+
+print(wk1)
+print()
+print(wk2)

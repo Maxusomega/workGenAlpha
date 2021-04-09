@@ -167,7 +167,13 @@ class workoutGen:
                 else:
                     wk1.append(ex)
 
-        return(wk1,wk2)
+        wk1V2 = []
+        wk2V2 = []
+        for ex1,ex2 in zip(wk1,wk2):
+            wk1V2.append(ex1 + (0,))
+            wk2V2.append(ex2 + (0,))
+
+        return(wk1V2,wk2V2)
 
     #no longer functional with the addition of rep ranges
     def formatterCSV(self,exs):
