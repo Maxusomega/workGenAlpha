@@ -2,7 +2,7 @@
 
 {% block content %}
 
-
+<div class='container'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 table {
@@ -54,6 +54,9 @@ body {
             <h3>Rep Range</h3>
         </th>
         <th>
+            <h3>Weight Used (currently not implemented)</h3>
+        </th>
+        <th>
             <h3>Check once completed</h3>
         </th>
 
@@ -73,6 +76,19 @@ body {
         </th>
         <th>
             {{ex[5]}}
+        </th>
+        <th>
+
+
+            <!--problem child-->
+            <label for="weight">Weight (lbs): </label><br>
+            <input type="int" id="weight" name="weight" value={{ex[7]}}><br>
+
+            <input type="submit" value="Submit">
+
+
+
+
         </th>
         <th>
             <label class="container">completed
@@ -106,6 +122,9 @@ body {
         <h3>Rep Range</h3>
     </th>
     <th>
+        <h3>Weight Used</h3>
+    </th>
+    <th>
         <h3>Check once completed</h3>
     </th>
     
@@ -128,6 +147,21 @@ body {
         {{ex[5]}}
     </th>
     <th>
+
+
+
+        <!--problem child-->
+        <label for="weight">Weight (lbs): </label><br>
+        <input type="int" id="weight" name="weight" value={{ex[7]}}><br>
+
+        <input type="submit" value="Submit">
+
+
+
+
+        
+    </th>
+    <th>
         <label class="container">completed
             <input type="checkbox">
             <span class="checkmark"></span>
@@ -139,5 +173,6 @@ body {
 
 </table>
 
+</div>
 
 {% endblock %}

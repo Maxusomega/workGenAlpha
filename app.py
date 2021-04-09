@@ -81,10 +81,31 @@ def retrieve():
 
     return render_template('retrieve.html', form=form)
 
+"""
+@app.context_processor
+def utility_processor():
+    def updateWeight(email,wkNum,exNum,weight):
+
+        return archive.archive().adjustWeight(email,wkNum,exNum,weight)
+
+    return dict(format_price=updateWeight)
+"""
+
+#rendering the HTML page which has the button
+@app.route('/json')
+def json():
+    return render_template('json.html')
+
+#background process happening without any refreshing
+@app.route('/background_process_test')
+def background_process_test():
+    #archive.archive().adjustWeight(email,wkNum,exNum,weight)
+    print("meow")
+    return ("nothing")
+
+
 if __name__ == '__main__':
     app.run()
-
-
 
 
 """
