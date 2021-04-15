@@ -63,6 +63,8 @@ body {
     </tr>
 
     <tr>
+        {% set count = 0 %}
+
         {% for ex in wk1 %}
 
         <th>
@@ -77,14 +79,45 @@ body {
         <th>
             {{ex[5]}}
         </th>
+
         <th>
 
-
             <!--problem child-->
-            <label for="weight">Weight (lbs): </label><br>
-            <input type="int" id="weight" name="weight" value={{ex[7]}}><br>
-
-            <input type="submit" value="Submit">
+            <body>
+                <form method="post" id="todo-form">
+                      <input type="int" name="todo" id="todo" value={{ex[7]}}>
+                      <button type="submit">submit</button>
+                  </form>
+                
+                      <!--Jquery Cdn -->
+                <script src="https://code.jquery.com/jquery-3.5.1.js" 
+                        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+                        crossorigin="anonymous"></script>
+                
+                <script type="text/javascript">
+                  $(document).on('submit','#todo-form',function(e)
+                                 {
+                    console.log('hello');
+                    e.preventDefault();
+                    $.ajax({
+                      type:'POST',
+                      url:'/submitWeight',
+                      data:{
+                        email: "{{ email }}",
+                        workout: 1,
+                        exNum:"{{ count }}",
+                        todo:$("#todo").val()                      
+                        
+                      },
+                      success:function()
+                      {
+                        //alert('saved');
+                      }
+                    })
+                  });
+                </script>
+                
+              </body>
 
 
 
@@ -97,7 +130,7 @@ body {
               </label>
         </th>
     </tr>
-
+    {% set count = count + 1 %}
     {% endfor %}
 
 </table>

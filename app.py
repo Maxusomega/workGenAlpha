@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from flask.globals import request
+from werkzeug.utils import escape
 from forms import SignUpForm
 
 from flask_sqlalchemy import SQLAlchemy
@@ -89,7 +90,7 @@ def utility_processor():
         return archive.archive().adjustWeight(email,wkNum,exNum,weight)
 
     return dict(format_price=updateWeight)
-"""
+
 
 #rendering the HTML page which has the button
 @app.route('/json')
@@ -102,7 +103,21 @@ def background_process_test():
     #archive.archive().adjustWeight(email,wkNum,exNum,weight)
     print("meow")
     return ("nothing")
+"""
+@app.route("/submitWeight",methods=["POST","GET"])
+def submitWeight():
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        email = request.form.get("email")
+        wkNum = int(request.form.get("workout"))
+        exNum = int(request.form.get("exNum"))
 
+        #print(todo,email,wkNum,exNum)
+        archive.archive().adjustWeight(email,wkNum,exNum,todo)
+
+    return render_template('weightTest.html')
+  
+  
 
 if __name__ == '__main__':
     app.run()
