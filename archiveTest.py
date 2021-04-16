@@ -4,13 +4,13 @@
 import storeWk as st
 import algoImp as a
 
-
+"""
 
 wk = a.workoutGen()
 wkls = None
 while(True):
     try:
-        wkls = wk.generator("swim")
+        wkls = wk.generator("baseball")
         break
     except:
         pass
@@ -19,17 +19,22 @@ wk1,wk2 = wk.formatter(wkls.wk)
 
 arch = st.archive()
 
-arch.archive(wk1,wk2,"swsmatthew@gmail.com")
+arch.archive(wk1,wk2,"test@gmail.com")
+"""
 
-wk1,wk2 = arch.get("swsmatthew@gmail.com")
+arch = st.archive()
+wk1,wk2 = arch.get("test@gmail.com")
 
 print(wk1)
 print()
 print(wk2)
+print()
 print("adding value to workout")
-arch.adjustWeight("swsmatthew@gmail.com",1,1,100)
+arch.adjustWeight("test@gmail.com",0,0,69)
+arch.adjustWeight("test@gmail.com",0,1,42)
+arch.adjustWeight("test@gmail.com",0,2,"hello")
 
-wk1,wk2 = arch.get("swsmatthew@gmail.com")
+wk1,wk2 = arch.get("test@gmail.com")
 
 print(wk1)
 print()

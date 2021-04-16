@@ -1,7 +1,8 @@
+from warnings import resetwarnings
 from flask import Flask, render_template, redirect, request
 from flask.globals import request
 from werkzeug.utils import escape
-from forms import SignUpForm
+from forms import SignUpForm, WeightForm
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -82,28 +83,41 @@ def retrieve():
 
     return render_template('retrieve.html', form=form)
 
-"""
-@app.context_processor
-def utility_processor():
-    def updateWeight(email,wkNum,exNum,weight):
+@app.route('/addWeight/<email>', methods=['GET', 'POST'])
+def addWeight(email):
+    form = WeightForm()
+    if form.is_submitted():
+        result = request.form
+        if result.get("wk1ex1") != "" and result.get("wk1ex2") != "":
+            archive.archive().adjustWeight(email,0,0,result.get("wk1ex1"))
+            archive.archive().adjustWeight(email,0,1,result.get("wk1ex2"))
+            archive.archive().adjustWeight(email,0,2,result.get("wk1ex3"))
+            archive.archive().adjustWeight(email,0,3,result.get("wk1ex4"))
+            return render_template('success.html')
 
-        return archive.archive().adjustWeight(email,wkNum,exNum,weight)
+        elif result.get("wk2ex1") != "" and result.get("wk2ex2") != "":
+            archive.archive().adjustWeight(email,1,0,result.get("wk2ex1"))
+            archive.archive().adjustWeight(email,1,1,result.get("wk2ex2"))
+            archive.archive().adjustWeight(email,1,2,result.get("wk2ex3"))
+            archive.archive().adjustWeight(email,1,3,result.get("wk2ex4"))
+            return render_template('success.html')
 
-    return dict(format_price=updateWeight)
+        else:
+            return render_template('errorFound.html', err="Both exercise's weights were left blank")
+
+        
 
 
-#rendering the HTML page which has the button
-@app.route('/json')
-def json():
-    return render_template('json.html')
 
-#background process happening without any refreshing
-@app.route('/background_process_test')
-def background_process_test():
-    #archive.archive().adjustWeight(email,wkNum,exNum,weight)
-    print("meow")
-    return ("nothing")
-"""
+
+    try:
+        wk1,wk2 = archive.archive().get(email)
+
+    except:
+        return render_template('errorFound.html', err="If you're seeing this then Matthew has royally fucked up ¯\_(ツ)_/¯")
+
+    return render_template('addWeight.html', form=form, wk1=wk1,wk2=wk2)
+
 @app.route("/submitWeight",methods=["POST","GET"])
 def submitWeight():
     if request.method == "POST":
@@ -112,12 +126,16 @@ def submitWeight():
         wkNum = int(request.form.get("workout"))
         exNum = int(request.form.get("exNum"))
 
+        print("email: {}, workout number: {}, exercise number: {}, weight: {}".format(email,wkNum,exNum,todo))
+
         #print(todo,email,wkNum,exNum)
         archive.archive().adjustWeight(email,wkNum,exNum,todo)
 
     return render_template('weightTest.html')
   
-  
+@app.route("/success",methods=["POST","GET"])
+def success():
+    return render_template('success.html')
 
 if __name__ == '__main__':
     app.run()
@@ -141,3 +159,26 @@ if __name__ == '__main__':
         return render_template('user.html', result=result)
 
         """
+
+"""
+@app.context_processor
+def utility_processor():
+    def updateWeight(email,wkNum,exNum,weight):
+
+        return archive.archive().adjustWeight(email,wkNum,exNum,weight)
+
+    return dict(format_price=updateWeight)
+
+
+#rendering the HTML page which has the button
+@app.route('/json')
+def json():
+    return render_template('json.html')
+
+#background process happening without any refreshing
+@app.route('/background_process_test')
+def background_process_test():
+    #archive.archive().adjustWeight(email,wkNum,exNum,weight)
+    print("meow")
+    return ("nothing")
+"""

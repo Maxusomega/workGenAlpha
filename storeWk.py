@@ -38,7 +38,7 @@ class archive:
     #note to future self: DON'T USE TUPLES INSIDE ARRAYS INSIDE ARRAYS or just don't be an idiot when coding
     def adjustWeight(self,email,wkNum,exNum,weight):
 
-        p_in = open("workoutArchive.pickle","rb") #loading in email wit read only
+        p_in = open("workoutArchive.pickle","rb") #loading in email with read only
         arch = p.load(p_in)
         p_in.close() #closing the archive
 
