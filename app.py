@@ -105,10 +105,6 @@ def addWeight(email):
         else:
             return render_template('errorFound.html', err="Both exercise's weights were left blank")
 
-        
-
-
-
 
     try:
         wk1,wk2 = archive.archive().get(email)

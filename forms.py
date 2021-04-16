@@ -1,11 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField,SelectField
 
 class SignUpForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email address')
-    sport = StringField('Sport (supports "swim", "baseball", "soccer", and "none")')
+    #sport = StringField('Sport (supports "swim", "baseball", "soccer", and "none")')
+
+    sport = SelectField(
+        'Sports',
+        choices=[('swim', 'Swim'), ('baseball', 'Baseball'), ('soccer', 'Soccer'), ('none', 'No Sport')]
+    )
         
     submit = SubmitField("Submit")
 
