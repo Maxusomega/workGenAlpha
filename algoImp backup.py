@@ -20,7 +20,6 @@ class workoutNode:
         self.squat = False
         self.hinge = False
         self.carry = False
-        self.core = False
 
     def addEx(self, exercise):
         self.wk.append(exercise)
@@ -36,8 +35,6 @@ class workoutNode:
             self.hinge = True
         elif (exercise[1].lower() == "carry"):
             self.carry = True
-        elif (exercise[1].lower() == "core"):
-            self.core = True
         else:
             pass
             #print("Added type: {} exericse".format(exercise[4]))
@@ -59,16 +56,13 @@ class workoutGen:
         self.stack = []
         self.nextType = "aux"
 
-    def generator(self,sport,level): #1 beginner, bw and bands | 2 intermediate, machines, dumbells and bands | 3 advanced everything that's not bands, machines, and bw
-        level = int(level) #man coding is do tedious, this line turned an infinite loop to working code
+    def generator(self,sport):
         stack = []
         chosen = []
 
         w = workoutNode()
 
         stack.append(w)
-
-        count = 0
 
         while(True):
             curr = stack[-1]
@@ -91,49 +85,32 @@ class workoutGen:
 
             if(curr.push == False):
                 ex = self.cur.execute('SELECT * FROM exercises WHERE type == "push"')   
-                #print("push exercsies retreived, about to filter")
-                ex = self.skillFilter(ex,level)
-                #print("\nfiltered")
-
+                
                 curr.addEx(r.choice(list(ex)))
                 stack.append(curr)
 
-                print("inserted push")
+                #print("inserted push")
                 continue
 
             if(curr.pull == False):
                 ex = self.cur.execute('SELECT * FROM exercises WHERE type == "pull"')   
                 
-                ex = self.skillFilter(ex,level)
-
-                #print(ex)
-                
                 curr.addEx(r.choice(list(ex)))
                 stack.append(curr)
-
-                print("inserted pull")
                 continue
 
             if(curr.squat == False):
                 ex = self.cur.execute('SELECT * FROM exercises WHERE type == "squat"')   
                 
-                ex = self.skillFilter(ex,level)
-
                 curr.addEx(r.choice(list(ex)))
                 stack.append(curr)
-
-                print("inserted squat")
                 continue
 
             if(curr.hinge == False):
                 ex = self.cur.execute('SELECT * FROM exercises WHERE type == "hinge"')   
-
-                ex = self.skillFilter(ex,level)
-
+                
                 curr.addEx(r.choice(list(ex)))
                 stack.append(curr)
-
-                print("inserted hinge")
                 continue
 
             if(curr.carry == False):
@@ -141,22 +118,10 @@ class workoutGen:
                 
                 curr.addEx(r.choice(list(ex)))
                 stack.append(curr)
-
-                print("inserted carry")
-                continue
-
-            if(curr.core == False):
-                ex = self.cur.execute('SELECT * FROM exercises WHERE type == "core"')   
-                
-                curr.addEx(r.choice(list(ex)))
-                stack.append(curr)
-
-                print("inserted core")
                 continue
 
             if(self.nextType == "aux"):
                 ex = self.cur.execute('SELECT * FROM exercises WHERE type == "aux"')
-                #ex = self.skillFilter(ex,level)
                 ch = []
 
                 while(True):
@@ -194,7 +159,7 @@ class workoutGen:
         for ex in exs:
             if ex[1] in {"push", "pull", "carry"}:
                 wk1.insert(0, ex)
-            elif ex[1] in {"squat", "hinge","core"}:
+            elif ex[1] in {"squat", "hinge"}:
                 wk2.insert(0, ex)
             else:
                 if len(wk2) < len(wk1):
@@ -210,33 +175,6 @@ class workoutGen:
 
         return(wk1V2,wk2V2)
 
-
-    def skillFilter(self,ex,level):
-        #print("entered filter function")
-        print("About to filter for level {}".format(level))
-        if level == 1:
-            #print("About to filter for level {}".format(level))
-            exf = [n for n in ex if n[3].lower() == "band" or n[3].lower() == "trx" or n[3].lower() == "none"]
-            print(exf)
-            return exf
-
-        if level == 2:
-            #print("About to filter for level {}".format(level))
-            exf = [n for n in ex if n[3].lower() == "machine" or n[3].lower() == "dumbell" or n[3].lower() == "band"]
-            print(exf)
-            return exf
-
-        if level == 3:
-            #print("About to filter for level {}".format(level))
-            exf = [n for n in ex if n[3].lower() != "none" or n[3].lower() != "band" or n[3].lower() != "machine"]
-            print(exf)
-            return exf
-
-
-        
-
-
-"""
     #no longer functional with the addition of rep ranges
     def formatterCSV(self,exs):
         r.shuffle(exs)
@@ -266,4 +204,3 @@ class workoutGen:
                 wkWrite.writerow(['', one[0], r.choice(repRange), one[3], '', two[0], r.choice(repRange), two[3]])
 
             wkWrite.writerow(['', one[0], r.choice(repRange), one[3], '', two[0], r.choice(repRange), two[3]])
-            """

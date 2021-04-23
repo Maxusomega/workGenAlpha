@@ -7,7 +7,7 @@ wk = al.workoutGen()
 wkls = None
 while(True):
     try:
-        wkls = wk.generator("swim")
+        wkls = wk.generator("none","3")
         break
     except:
         pass

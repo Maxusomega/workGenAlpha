@@ -12,6 +12,11 @@ class SignUpForm(FlaskForm):
         choices=[('swim', 'Swim'), ('baseball', 'Baseball'), ('soccer', 'Soccer'), ('none', 'No Sport')]
     )
         
+    skillLevel = SelectField(
+        'Skill Level',
+        choices=[('1', 'Beginner'), ('2', 'Intermediate'), ('3', 'Advanced')]
+    )
+
     submit = SubmitField("Submit")
 
 class WeightForm(FlaskForm):

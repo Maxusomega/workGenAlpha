@@ -44,7 +44,7 @@ def signup():
         wkls = None
         while(True):
             try:
-                wkls = wk.generator(result.get("sport").lower().strip())
+                wkls = wk.generator(result.get("sport").lower().strip(), result.get("skillLevel").lower().strip())
                 break
             except:
                 pass
@@ -93,14 +93,30 @@ def addWeight(email):
             archive.archive().adjustWeight(email,0,1,result.get("wk1ex2"))
             archive.archive().adjustWeight(email,0,2,result.get("wk1ex3"))
             archive.archive().adjustWeight(email,0,3,result.get("wk1ex4"))
-            return render_template('success.html')
+
+            try:
+                wk1,wk2 = archive.archive().get(email)
+
+            except:
+                return render_template('errorFound.html', err="Matthew dun goofed")
+
+            return render_template('display.html', wk1=wk1, wk2=wk2, fName = "Archived", lName = "Result", email = result.get("email"))
+
+            
 
         elif result.get("wk2ex1") != "" and result.get("wk2ex2") != "":
             archive.archive().adjustWeight(email,1,0,result.get("wk2ex1"))
             archive.archive().adjustWeight(email,1,1,result.get("wk2ex2"))
             archive.archive().adjustWeight(email,1,2,result.get("wk2ex3"))
             archive.archive().adjustWeight(email,1,3,result.get("wk2ex4"))
-            return render_template('success.html')
+            
+            try:
+                wk1,wk2 = archive.archive().get(email)
+
+            except:
+                return render_template('errorFound.html', err="Matthew dun goofed")
+
+            return render_template('display.html', wk1=wk1, wk2=wk2, fName = "Archived", lName = "Result", email = result.get("email"))
 
         else:
             return render_template('errorFound.html', err="Both exercise's weights were left blank")
