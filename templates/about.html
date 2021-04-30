@@ -2,15 +2,27 @@
 
 {% block content %}
 
-<h1>Just a Stub</h1>
-<p>I am the {{ author }}</p>
+<h1>About Page</h1>
 
-{% if sunny %}
-<p>It sunny</p>
+<!DOCTYPE html>
+<html>
 
-{% else %}
-<p>It not sunny</p>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
 
-{% endif %}
+<body style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0);">
+    <p><span style="font-size: 20px;"><strong>Hi! Thanks for checking out my capstone project!</strong></span></p>
+    <p><strong><span style="font-size: 16px;">This site is meant to be used as support to a training program within a given sport. If I were a swimmer getting only swim workouts from my coach, I would use this app to generate a weight program to support my lifts and improve my performance in the pool.</span></strong></p>
+    <p><strong><span style="font-size: 18px;">Now for some of the technical stuff:</span></strong></p>
+    <p><strong>This site is written is created in a flask environment (python) with an SQLite database. The algorithm is &quot;pseudo AI&quot; constraint handling where the user gives constraints and the algorithm creates a workouts based around these parameters. In this case, sport and skill level. Overall this project was really eye opening to the front end side of programs rather than just the algorithms behind them.&nbsp;</strong></p>
+    <p><strong>Any questions? Shoot me an email at <a href="mailto:swsmatthew@gmail.com">swsmatthew@gmail.com</a></strong></p>
+    <p><span style="font-size: 14px;"><strong>-Matthew Cole</strong></span></p>
+</body>
+
+</html>
+
 
 {% endblock %}

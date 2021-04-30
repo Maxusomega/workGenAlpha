@@ -30,9 +30,9 @@ db = SQLAlchemy(app)
 def home():
     return (render_template('homepage.html'))
 
-#@app.route('/about')
-#def about():
-#    return (render_template('about.html', author="Jerry", sunny=False))
+@app.route('/about')
+def about():
+    return (render_template('about.html'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
